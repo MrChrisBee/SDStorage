@@ -1,0 +1,36 @@
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        System.out.println("kann Medium entfernt werden?" + Environment.isExternalStorageRemovable());
+        System.out.println("ist es emuliert? " + Environment.isExternalStorageEmulated());
+        final String state = Environment.getExternalStorageState();
+        switch (state){
+            case Environment.MEDIA_MOUNTED:
+                System.out.println("schreiben und lesen möglich");
+                break;
+            case Environment.MEDIA_MOUNTED_READ_ONLY:
+                System.out.println("nur lesen  möglich");
+                break;
+            default:
+                System.out.println("weder lesen noch schreiben möglich");
+        }
+        System.out.println(Environment.getExternalStorageDirectory());
+        System.out.println(getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+        File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        System.out.println(f.toString());
+        File pics = new File(f, "pics");
+        File mfile = new File(f, "file.pic");
+        boolean isTrue = pics.mkdirs();
+        try {
+            boolean isfile =mfile.createNewFile();
+            System.out.println(isTrue + " " + isfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        File [] list = f.listFiles();
+        for (File temp : list){
+            System.out.println(temp.getName());
+        }
+        finish();
+    }
